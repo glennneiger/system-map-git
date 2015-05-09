@@ -1,5 +1,4 @@
 # !/bin/bash
-# 
 
 # Set postgres parameters
 pg_dbname=trimet
@@ -14,9 +13,10 @@ read -s PGPASSWORD
 export PGPASSWORD
 
 project_dir='G:/PUBLIC/GIS_Projects/System_Map/2015'
+code_dir="${project_dir}/system-map-git"
 
 createDistinctRoutes() {
-	distinct_sql="${project_dir}/sql/create_distinct_routes.sql"
+	distinct_sql="${code_dir}/sql/create_distinct_routes.sql"
 
 	echo "psql -d $pg_dbname -h $pg_host -U $pg_user -f $distinct_sql"
 	psql -d $pg_dbname -h $pg_host -U $pg_user -f "$distinct_sql"
