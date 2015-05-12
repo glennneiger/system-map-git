@@ -18,7 +18,7 @@ env.workspace = '//gisstore/gis/PUBLIC/GIS_Projects/System_Map/2015'
 temp_shp_dir = os.path.join(env.workspace, 'shp', 'temp')
 
 # final datasets
-distinct_routes_src = os.path.join(env.workspace, 'shp', 'distinct_routes.shp')
+distinct_routes_src = os.path.join(env.workspace, 'shp', 'distinct_routes_fall15.shp')
 smoothed_routes = os.path.join(env.workspace, 'shp', 'carto_routes.shp')
 
 # intermediate datasets
@@ -81,7 +81,7 @@ def mergeDualCarriageways():
 	temp_merge = os.path.join(env.workspace, 'shp', 'temp', 'temp_merge.shp')
 	temp_collapse = os.path.join(env.workspace, 'shp', 'temp', 'temp_collapse.shp')
 	
-	route_fields = ['Shape@', 'route_id', 'serv_level']
+	route_fields = ['Shape@', 'route_id', 'serv_level', 'route_type']
 	i_cursor = da.InsertCursor(collapsed_routes, route_fields)
 
 	for route, service in route_service_list:
@@ -115,19 +115,19 @@ def mergeDualCarriageways():
 	management.Dissolve(collapsed_routes, dissolved_routes, dissolve_fields, 
 		multi_part=geom_class, unsplit_lines=line_handling)
 
-def simplifySmoothRoutes():
-	"""Clean up over-noded sections of the routes with simplify, then smooth them
-	out a bit with the smooth line tool"""
+def smoothRoutes():
+	"""Smooth sharp edges with smooth line tool for more aesthetically pleasing look"""
 
-	simp_algorithm = 'POINT_REMOVE'
-	simp_tolerance = 5
-	cartography.SimplifyLine(dissolved_routes, 
-		simplified_routes, simp_algorithm, simp_tolerance)	
-
+	# The tolerance of 500 feet here results in a maximum displacement of ~75 ft which
+	# is miniamal at teh scale of the system map (but large enough to make things less
+	# jagged while retaining most of the detail)
 	smooth_algorithm = 'PAEK'
-	smooth_tolerance = 50
-	cartography.SmoothLine(simplified_routes, 
+	smooth_tolerance = 500
+	cartography.SmoothLine(dissolved_routes, 
 		smoothed_routes, smooth_algorithm, smooth_tolerance)
 
-#mergeDualCarriageways()
-simplifySmoothRoutes()
+	# Note: I experimented with the simplify line tool as well, but it generally made the data
+	# less visually pleasing rather than more
+
+mergeDualCarriageways()
+smoothRoutes()

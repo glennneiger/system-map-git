@@ -15,12 +15,13 @@ from arcpy import management
 env.overwriteOutput = True
 env.workspace = '//gisstore/gis/PUBLIC/GIS_Projects/System_Map/2015'
 
-all_routes = os.path.join(env.workspace, 'shp', 'distinct_routes.shp')
+all_routes = os.path.join(env.workspace, 'shp', 'carto_routes.shp')
 route_gdb = os.path.join(env.workspace, 'shp', 'indiv_carto_routes.gdb')
 route_fields = ['Shape@', 'route_id', 'serv_level', 'route_type']
 
 def separateRoutes():
-	""""""
+	"""Create a distinct feature class for each of the routes in the source fc"""
+	
 	type_dict = {
 		1: 'bus', 
 		2: 'aerial tram', 
@@ -32,10 +33,10 @@ def separateRoutes():
 	line_dict = {
 		193: 'ns', 
 		194: 'cl', 
-		208: 'aerial_tram'
+		208: 'aerial_tram',
 		# 999 is a place holder being used since the route_id field is type: int
 		# and doesn't accept characters other than numbers
-		999: 'new_sellwood_99' 
+		999: 'new_sellwood_099' 
 	}
 
 	management.CreateFileGDB(os.path.dirname(route_gdb), os.path.basename(route_gdb))
@@ -52,15 +53,18 @@ def separateRoutes():
 			if serv not in service_levels:
 				service_levels.append(serv)
 
+	oregon_spn = arcpy.SpatialReference(2913)
 	for level in service_levels:
-		management.CreateFeatureDataset(route_gdb, level.replace('-', '_'))
+		management.CreateFeatureDataset(route_gdb, 
+			level.replace('-', '_'), oregon_spn)
 
 	for route_id, service in service_list:
 		# translate number to name for streetcar and aerial tram lines
 		try:
 			route_text = line_dict[route_id]
 		except:
-			route_text = 'line_{0}'.format(route_id)
+			# adding leading zeros to lines with less than 3 digits for readability
+			route_text = 'line_{0:03d}'.format(route_id)
 		
 		service_text = service.replace('-', '_')
 		route_name = '{0}_{1}_carto'.format(route_text, service_text)
@@ -68,7 +72,6 @@ def separateRoutes():
 		current_route = os.path.join(route_gdb, service_text, route_name)
 		geom_type = 'POLYLINE'
 		template = all_routes
-		oregon_spn = arcpy.SpatialReference(2913)
 		management.CreateFeatureclass(os.path.dirname(current_route), 
 			os.path.basename(current_route), geom_type, template, 
 			spatial_reference=oregon_spn)
