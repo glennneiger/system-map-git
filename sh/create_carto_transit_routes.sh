@@ -12,7 +12,7 @@ echo 'Enter PostGreSQL password:'
 read -s PGPASSWORD
 export PGPASSWORD
 
-project_dir='G:/PUBLIC/GIS_Projects/System_Map/2015'
+project_dir="G:/PUBLIC/GIS_Projects/System_Map/2015"
 code_dir="${project_dir}/system-map-git"
 
 createDistinctRoutes() {
