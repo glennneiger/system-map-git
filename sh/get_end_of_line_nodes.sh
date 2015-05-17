@@ -52,7 +52,7 @@ dropPgTables() {
 	done
 }
 
-#loadOffsetRoutes;
+loadOffsetRoutes;
 #createEndOfLineNodes;
-exportEndOfLineNodes;
-dropPgTables;
+#exportEndOfLineNodes;
+#dropPgTables;

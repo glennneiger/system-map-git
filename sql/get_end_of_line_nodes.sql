@@ -20,7 +20,7 @@ create table end_of_line_nodes as
       select id, ST_EndPoint(geom), route_id, serv_level, route_type
       from offset_dump) end_pts
     --never group by geom alone as it has poor precision
-    group by ST_X(geom), ST_Y(geom), geom
+    group by ST_X(geom), ST_Y(geom), geom, serv_level
       having count(*) = 1)
   --this first query has a number of false positives that do end without other lines 
   --intersecting ther end points, but they're right on the top of the middle of other
