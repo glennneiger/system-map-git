@@ -44,12 +44,11 @@ def populateUnifiedFc():
 		for fc in arcpy.ListFeatureClasses(feature_dataset=fd):
 			# exclude these as a different more generalized fc is being used
 			# to represent the streetcar
-			if fc not in ('ns_standard_carto', 'cl_standard_carto'):
-				print fc
-				fc_path = os.path.join(env.workspace, fd, fc)
-				with da.SearchCursor(fc_path, route_fields) as s_cursor:
-					for row in s_cursor:
-						i_cursor.insertRow(row)
+			print fc
+			fc_path = os.path.join(env.workspace, fd, fc)
+			with da.SearchCursor(fc_path, route_fields) as s_cursor:
+				for row in s_cursor:
+					i_cursor.insertRow(row)
 
 	del i_cursor
 

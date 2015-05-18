@@ -22,8 +22,6 @@ loadOffsetRoutes() {
 	oregon_spn='2913'
 	offset_shp="${project_dir}/shp/offset_routes.shp"
 
-	echo "shp2pgsql -s $oregon_spn -D -I $offset_shp $offset_table \
-		| psql -q -h $pg_host -U $pg_user -d $pg_dbname"
 	shp2pgsql -d -s $oregon_spn -D -I "$offset_shp" $offset_table \
 		| psql -q -h $pg_host -U $pg_user -d $pg_dbname
 }
@@ -53,6 +51,6 @@ dropPgTables() {
 }
 
 loadOffsetRoutes;
-#createEndOfLineNodes;
-#exportEndOfLineNodes;
-#dropPgTables;
+createEndOfLineNodes;
+exportEndOfLineNodes;
+dropPgTables;
