@@ -16,8 +16,8 @@ create table route_pt_dump as
 		select gid as id, route_id, serv_level, route_type, 
 			ST_DumpPoints(geom) as pd
 		from distinct_routes_fall15
-		where geom && ST_MakeEnvelope(7638499.74714, 
-			673309.064985, 7652208.08047,  688913.231652, 2913)) temp_dump;
+		where geom && ST_MakeEnvelope(7638499.74714, 673309.064985, 
+			7652208.08047,  688913.231652, 2913)) temp_dump;
 
 drop table if exists segmented_routes cascade;
 create table segmented_routes as
@@ -42,6 +42,20 @@ create table unique_points as
 alter table unique_points add id serial primary key;
 create index unique_pt_gix on unique_points using GIST (geom);
 
+--Merge any points that are with 0.1 feet of each other before snapping
+--the segements to them, nodes that close to each other can cause problems
+drop table if exists snap_points cascade;
+create table snap_points as  
+	with merged_points as ( 
+		select up1.id, (sum(ST_X(up2.geom)) / count(*)) as x, 
+			(sum(ST_Y(up2.geom)) / count(*)) as y
+		from unique_points up1, unique_points up2
+		where ST_DWithin(up1.geom, up2.geom, 0.1)
+		group by up1.id)
+	select ST_SetSRID(ST_MakePoint(x, y), 2913) as geom
+	from merged_points
+	group by x, y;
+
 --snap segments to all points that are within 1 foot of them, including those that
 --are not already a part of their geometry, this is to account for any minor
 --inconsistencies that may have been introduced in the manual editing process
@@ -49,9 +63,9 @@ create index unique_pt_gix on unique_points using GIST (geom);
 drop table if exists conflated_segments cascade;
 create table conflated_segments as
 	select sr.id, sr.route_id, sr.serv_level, sr.route_type,
-		ST_Snap(sr.geom, ST_Collect(up.geom), 1) as geom
-	from segmented_routes sr, unique_points up
-	where ST_DWithin(sr.geom, up.geom, 1)
+		ST_Snap(sr.geom, ST_Collect(sp.geom), 1) as geom
+	from segmented_routes sr, snap_points sp
+	where ST_DWithin(sr.geom, sp.geom, 1)
 	group by sr.id, sr.route_id, sr.serv_level, sr.geom;
 
 --2) eliminate duplicate segments
@@ -78,9 +92,9 @@ create table service_level_routes_fall15 as
 	select routes, serv_level, route_type, (ST_Dump(geom)).geom as geom
 	from (
 		select routes, serv_level, route_type,
-			ST_LineMerge(ST_Collect(ST_SetSRID(ST_MakeLine(
+			ST_Simplify(ST_LineMerge(ST_Collect(ST_SetSRID(ST_MakeLine(
 				ST_MakePoint(xy_array[1], xy_array[2]), 
-				ST_MakePoint(xy_array[3], xy_array[4])), 2913))) as geom
+				ST_MakePoint(xy_array[3], xy_array[4])), 2913))), 0.1) as geom
 		from (
 			select cp1.serv_level, cp1.route_type, 
 				array_to_string(array_agg(distinct cp1.route_id order by cp1.route_id), ',') as routes, 

@@ -17,15 +17,14 @@ env.overwriteOutput = True
 env.workspace = '//gisstore/gis/PUBLIC/GIS_Projects/System_Map/2015'
 temp_shp_dir = os.path.join(env.workspace, 'shp', 'temp')
 
-# final datasets
+# input datasets
 distinct_routes_src = os.path.join(env.workspace, 'shp', 'distinct_routes_fall15.shp')
-smoothed_routes = os.path.join(env.workspace, 'shp', 'carto_routes.shp')
 
 # intermediate datasets
 distinct_routes = os.path.join(temp_shp_dir, 'distinct_routes_temp.shp')
 collapsed_routes = os.path.join(temp_shp_dir, 'collapsed_routes.shp')
 dissolved_routes = os.path.join(temp_shp_dir, 'dissolved_routes.shp')
-simplified_routes = os.path.join(temp_shp_dir, 'simplified_routes.shp')
+smoothed_routes = os.path.join(temp_shp_dir, 'smoothed_routes.shp')
 
 def getRouteServicePairs():
 	"""Get all unique line-service level combinations in the routes feature class"""
