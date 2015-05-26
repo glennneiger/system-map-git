@@ -40,7 +40,7 @@ dropStreetsTable() {
 # # Get major roads for system map
 # mjr_roads_tbl='system_map_streets'
 # mjr_road_sql='get_major_roads_from_osm2pgsql.sql'
-# mjr_roads_shp='osm2pgsql_major_roads.shp'
+# mjr_roads_shp='system_map/osm2pgsql_major_roads.shp'
 
 # generateStreetsTable "$mjr_roads_sql";
 # exportStreetsToShp "$mjr_roads_tbl" "$mjr_roads_shp";
@@ -49,7 +49,7 @@ dropStreetsTable() {
 # Get city center streets for system map inset
 cc_streets_tbl='city_center_streets'
 cc_streets_sql='get_city_center_streets_from_osm2pgsql.sql'
-cc_streets_shp='city_center_streets.shp'
+cc_streets_shp='city_center/streets_cc.shp'
 
 generateStreetsTable "$cc_streets_sql";
 exportStreetsToShp "$cc_streets_tbl" "$cc_streets_shp";

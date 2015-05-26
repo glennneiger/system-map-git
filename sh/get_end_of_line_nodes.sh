@@ -20,7 +20,7 @@ node_table='end_of_line_nodes'
 
 loadOffsetRoutes() {
 	oregon_spn='2913'
-	offset_shp="${project_dir}/shp/offset_routes.shp"
+	offset_shp="${project_dir}/shp/system_map/offset_routes.shp"
 
 	shp2pgsql -d -s $oregon_spn -D -I "$offset_shp" $offset_table \
 		| psql -q -h $pg_host -U $pg_user -d $pg_dbname
@@ -34,7 +34,7 @@ createEndOfLineNodes() {
 }
 
 exportEndOfLineNodes() {
-	nodes_shp="${project_dir}/shp/end_of_line_nodes.shp"
+	nodes_shp="${project_dir}/shp/system_map/end_of_line_nodes.shp"
 	pgsql2shp -k -h $pg_host -u $pg_user -P $PGPASSWORD \
 		-f "$nodes_shp" $pg_dbname $node_table
 }

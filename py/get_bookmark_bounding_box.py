@@ -70,5 +70,5 @@ def createBoundingBoxPolygon(mxd_path, bkmk_name, out_fc):
 
 system_map_bkmk = '*system map extent*'
 system_map_mxd = os.path.join(env.workspace, 'mxd', 'system_map_2015.mxd')
-system_map_bbox = os.path.join(env.workspace, 'shp', 'system_map_bbox.shp')
+system_map_bbox = os.path.join(env.workspace, 'shp', 'system_map' 'system_map_bbox.shp')
 createBoundingBoxPolygon(system_map_mxd, system_map_bkmk, system_map_bbox)

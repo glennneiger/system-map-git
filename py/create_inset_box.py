@@ -17,7 +17,7 @@ env.workspace = '//gisstore/gis/PUBLIC/GIS_Projects/System_Map/2015'
 
 city_center_bkmk = 'city center extent'
 city_center_mxd = os.path.join(env.workspace, 'mxd', 'city_center_2015.mxd')
-inset_box = os.path.join(env.workspace, 'shp', 'inset_box.shp')
+inset_box = os.path.join(env.workspace, 'shp', 'system_map', 'inset_box.shp')
 
 def getBookmarkBbox(mxd_path, bkmk_name):
 	"""Get the coordinates of the city center map's bounding box"""

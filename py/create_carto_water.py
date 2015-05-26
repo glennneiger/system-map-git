@@ -17,7 +17,9 @@ from arcpy import analysis
 # Allow shapefiles to be overwritten and set the current workspace
 env.overwriteOutput = True
 env.workspace = '//gisstore/gis/PUBLIC/GIS_Projects/System_Map/2015'
+sm_shapefiles = os.path.join(env.workspace, 'shp', 'system_map')
 rlis_dir = '//gisstore/gis/Rlis'
+
 rlis_rivers = os.path.join(rlis_dir, 'WATER', 'riv_fill.shp')
 carto_rivers = os.path.join(env.workspace, 'shp', 'temp', 'carto_rivers.shp')
 
@@ -51,7 +53,7 @@ def multiBufferRivers():
 		buff_distances.append(cur_dist)
 		intervals -= 1
 
-	multibuff_rivers = os.path.join(env.workspace, 'shp', 'multibuffer_rivers.shp')
+	multibuff_rivers = os.path.join(sm_shapefiles, 'multibuffer_rivers.shp')
 	buffer_unit = 'FEET'
 	analysis.MultipleRingBuffer(carto_rivers, 
 		multibuff_rivers, buff_distances, buffer_unit)

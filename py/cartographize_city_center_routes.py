@@ -15,10 +15,11 @@ from arcpy import cartography
 # Allow shapefiles to be overwritten and set the current workspace
 env.overwriteOutput = True
 env.workspace = '//gisstore/gis/PUBLIC/GIS_Projects/System_Map/2015'
+cc_shapefiles = os.path.join(env.workspace, 'shp', 'city_center')
 temp_shp_dir = os.path.join(env.workspace, 'shp', 'temp')
 
 # final datasets
-serv_level_routes_src = os.path.join(env.workspace, 'shp', 'service_level_routes_fall15.shp')
+serv_level_routes_src = os.path.join(cc_shapefiles, 'service_level_routes_fall15.shp')
 serv_level_routes = os.path.join(temp_shp_dir, 'service_level_routes_temp.shp')
 
 dissolved_routes = os.path.join(temp_shp_dir, 'city_center_dissolved_routes.shp')
@@ -76,8 +77,8 @@ def mergeDualCarriageways():
 	management.MakeFeatureLayer(serv_level_routes, serv_level_rte_lyr)
 
 	mode_service_list = getModeServicePairs()
-	temp_merge = os.path.join(env.workspace, 'shp', 'temp', 'temp_merge.shp')
-	temp_collapse = os.path.join(env.workspace, 'shp', 'temp', 'temp_collapse.shp')
+	temp_merge = os.path.join(temp_shp_dir, 'temp_merge.shp')
+	temp_collapse = os.path.join(temp_shp_dir, 'temp_collapse.shp')
 	
 	route_fields = ['Shape@', 'routes', 'serv_level', 'route_type']
 	i_cursor = da.InsertCursor(collapsed_routes, route_fields)

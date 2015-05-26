@@ -24,12 +24,12 @@ createDistinctRoutes() {
 
 exportToShapefile() {
 	lines_table='distinct_routes'
-	lines_shp="${project_dir}/shp/${lines_table}.shp"
+	lines_shp="${project_dir}/shp/system_map/${lines_table}.shp"
 	pgsql2shp -k -h $pg_host -u $pg_user -P $PGPASSWORD \
 		-f "$lines_shp" $pg_dbname $lines_table
 
 	service_table='service_level_routes'
-	service_shp="${project_dir}/shp/${service_table}.shp"
+	service_shp="${project_dir}/shp/city_center/${service_table}.shp"
 	pgsql2shp -k -h $pg_host -u $pg_user -P $PGPASSWORD \
 		-f "$service_shp" $pg_dbname $service_table
 }

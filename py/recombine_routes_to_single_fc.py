@@ -16,7 +16,7 @@ from arcpy import cartography
 env.overwriteOutput = True
 project_dir = '//gisstore/gis/PUBLIC/GIS_Projects/System_Map/2015'
 temp_dir = os.path.join(project_dir, 'shp', 'temp')
-offset_routes = os.path.join(project_dir, 'shp', 'offset_routes.shp')
+offset_routes = os.path.join(project_dir, 'shp', 'system_map', 'offset_routes.shp')
 
 # workspace must be set to this gdb for listfeature classes to work
 env.workspace = os.path.join(project_dir, 'system-map-git', 'carto_routes.gdb')
@@ -26,7 +26,7 @@ def createUnifiedFc():
 	individual fc's"""
 
 	geom_type = 'POLYLINE'
-	template = os.path.join(project_dir, 'shp', 'distinct_routes.shp')
+	template = os.path.join(project_dir, 'shp', 'system_map', 'distinct_routes.shp')
 	oregon_spn = arcpy.SpatialReference(2913)
 	management.CreateFeatureclass(os.path.dirname(offset_routes),
 		os.path.basename(offset_routes), geom_type, template,

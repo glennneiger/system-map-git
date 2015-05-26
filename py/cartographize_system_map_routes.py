@@ -15,10 +15,11 @@ from arcpy import cartography
 # Allow shapefiles to be overwritten and set the current workspace
 env.overwriteOutput = True
 env.workspace = '//gisstore/gis/PUBLIC/GIS_Projects/System_Map/2015'
+sm_shapefiles = os.path.join(env.workspace, 'shp', 'system_map')
 temp_shp_dir = os.path.join(env.workspace, 'shp', 'temp')
 
 # input datasets
-distinct_routes_src = os.path.join(env.workspace, 'shp', 'distinct_routes_fall15.shp')
+distinct_routes_src = os.path.join(sm_shapefiles, 'distinct_routes_fall15.shp')
 
 # intermediate datasets
 distinct_routes = os.path.join(temp_shp_dir, 'distinct_routes_temp.shp')
@@ -77,8 +78,8 @@ def mergeDualCarriageways():
 	management.MakeFeatureLayer(distinct_routes, distinct_rte_lyr)
 
 	route_service_list = getRouteServicePairs()
-	temp_merge = os.path.join(env.workspace, 'shp', 'temp', 'temp_merge.shp')
-	temp_collapse = os.path.join(env.workspace, 'shp', 'temp', 'temp_collapse.shp')
+	temp_merge = os.path.join(temp_shp_dir, 'temp_merge.shp')
+	temp_collapse = os.path.join(temp_shp_dir, 'temp_collapse.shp')
 	
 	route_fields = ['Shape@', 'route_id', 'serv_level', 'route_type']
 	i_cursor = da.InsertCursor(collapsed_routes, route_fields)
