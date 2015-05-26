@@ -26,7 +26,7 @@ def createUnifiedFc():
 	individual fc's"""
 
 	geom_type = 'POLYLINE'
-	template = os.path.join(project_dir, 'shp', 'carto_routes.shp')
+	template = os.path.join(project_dir, 'shp', 'distinct_routes.shp')
 	oregon_spn = arcpy.SpatialReference(2913)
 	management.CreateFeatureclass(os.path.dirname(offset_routes),
 		os.path.basename(offset_routes), geom_type, template,

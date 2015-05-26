@@ -15,7 +15,7 @@ env.workspace = os.path.join(project_dir, 'system-map-git', 'carto_routes.gdb')
 
 # routes should be referenced by three digit numbers like '004', '075', '115', etc.
 # for MAX use 'max', WES - 'wes', Streetcar - 'streetcar', Aerial Tram - 'aerial'
-route_list = [
+route_list_example = [
 	'006',
 	'wes',
 	'max',
@@ -53,4 +53,6 @@ def curvesToVertices(route_list=None):
 				tolerance = 1 # foot
 				edit.Densify(fc_path, densification_method, max_deviation=tolerance)
 
-#curvesToVertices(route_list)
+route_list = [63]
+curvesToVertices(route_list)
+#curvesToVertices()
