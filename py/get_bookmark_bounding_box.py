@@ -14,6 +14,8 @@ from arcpy import management
 # Configure environment settings
 env.overwriteOutput = True
 env.workspace = '//gisstore/gis/PUBLIC/GIS_Projects/System_Map/2015'
+sm_shapefiles = os.path.join(env.workspace, 'shp', 'system_map')
+cc_shapefiles = os.path.join(env.workspace, 'shp', 'city_center')
 
 def getBookmarkBbox(mxd_path, bkmk_name):
 	"""Create a polygon from based on the city center bookmark and add it to
@@ -68,7 +70,12 @@ def createBoundingBoxPolygon(mxd_path, bkmk_name, out_fc):
 # city_center_mxd = os.path.join(env.workspace, 'mxd', 'city_center_2015.mxd')
 #getBookmarkBbox(city_center_mxd, city_center_bkmk)
 
-system_map_bkmk = '*system map extent*'
-system_map_mxd = os.path.join(env.workspace, 'mxd', 'system_map_2015.mxd')
-system_map_bbox = os.path.join(env.workspace, 'shp', 'system_map' 'system_map_bbox.shp')
-createBoundingBoxPolygon(system_map_mxd, system_map_bkmk, system_map_bbox)
+# system_map_bkmk = '*system map extent*'
+# system_map_mxd = os.path.join(env.workspace, 'mxd', 'system_map_2015.mxd')
+# system_map_bbox = os.path.join(sm_shapefiles, 'system_map_bbox.shp')
+# createBoundingBoxPolygon(system_map_mxd, system_map_bkmk, system_map_bbox)
+
+city_center_bkmk = '*city center extent*'
+city_center_mxd = os.path.join(env.workspace, 'mxd', 'city_center_2015.mxd')
+city_center_bbox = os.path.join(cc_shapefiles, 'city_center_bbox.shp')
+createBoundingBoxPolygon(city_center_mxd, city_center_bkmk, city_center_bbox)
