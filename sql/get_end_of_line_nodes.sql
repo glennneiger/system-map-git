@@ -4,7 +4,7 @@ create table end_of_line_nodes as
   --strings must first be dumped to linestring
   with offset_dump as (
     select row_number() over (order by gid) as id, 
-      route_id, route_type, serv_level, (ST_Dump(geom)).geom as geom
+      route_type, serv_level, (ST_Dump(geom)).geom as geom
     from offset_routes),
   pseudo_nodes as (
     select min(id) as id, geom, serv_level, min(route_type) as route_type

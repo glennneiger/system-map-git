@@ -16,6 +16,7 @@ env.overwriteOutput = True
 env.workspace = '//gisstore/gis/PUBLIC/GIS_Projects/System_Map/2015'
 sm_shapefiles = os.path.join(env.workspace, 'shp', 'system_map')
 cc_shapefiles = os.path.join(env.workspace, 'shp', 'city_center')
+tm_shapefiles = os.path.join(env.workspace, 'shp', 'transit_mall')
 
 def getBookmarkBbox(mxd_path, bkmk_name):
 	"""Create a polygon from based on the city center bookmark and add it to
@@ -75,7 +76,12 @@ def createBoundingBoxPolygon(mxd_path, bkmk_name, out_fc):
 # system_map_bbox = os.path.join(sm_shapefiles, 'system_map_bbox.shp')
 # createBoundingBoxPolygon(system_map_mxd, system_map_bkmk, system_map_bbox)
 
-city_center_bkmk = '*city center extent*'
-city_center_mxd = os.path.join(env.workspace, 'mxd', 'city_center_2015.mxd')
-city_center_bbox = os.path.join(cc_shapefiles, 'city_center_bbox.shp')
-createBoundingBoxPolygon(city_center_mxd, city_center_bkmk, city_center_bbox)
+# city_center_bkmk = '*city center extent*'
+# city_center_mxd = os.path.join(env.workspace, 'mxd', 'city_center_2015.mxd')
+# city_center_bbox = os.path.join(cc_shapefiles, 'city_center_bbox.shp')
+# createBoundingBoxPolygon(city_center_mxd, city_center_bkmk, city_center_bbox)
+
+transit_mall_bkmk = '*transit mall extent*'
+transit_mall_mxd = os.path.join(env.workspace, 'mxd', 'transit_mall_2015.mxd')
+transit_mall_bbox = os.path.join(tm_shapefiles, 'trasit_mall_bbox.shp')
+createBoundingBoxPolygon(transit_mall_mxd, transit_mall_bkmk, transit_mall_bbox)

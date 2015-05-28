@@ -99,5 +99,5 @@ def generateCcCombinedRoutesFc():
 
 	del i_cursor
 
-# createCcBusLabelsFc()
-# generateCcCombinedRoutesFc()
+createCcBusLabelsFc()
+generateCcCombinedRoutesFc()
