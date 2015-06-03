@@ -24,7 +24,7 @@ gap = input('enter the width the desired gap between the lines, in points: ')
 carto_pt_feet = 1 / float(72) / 12 
 pt_at_scale = carto_pt_feet * scale
 
-offset = ((w1 / 2) + (w2 / 2) + gap) * pt_at_scale
+offset = ((w1 / float(2)) + (w2 / float(2)) + gap) * pt_at_scale
 print 'The offset value at scale 1:{0}'.format(scale)
 print 'with line witdths of {0} & {1} and a gap of {2}'.format(w1, w2, gap)
 print '***is {0} feet***'.format(int(round(offset))) # round to nearest ft
