@@ -1,5 +1,7 @@
 scale = None
-map_msg = 'which map are you working on: System Map (sm) or City Center (cc)?: '
+input_text1 = 'which map are you working on: '
+input_text2 = 'System Map (sm), City Center (cc) or Pylon Maps (p)?: '
+map_msg = input_text1 + input_text2
 scale_flag = raw_input(map_msg)
 
 # scale in feet, more common notation would be 1:scale, indicating that something
@@ -10,8 +12,10 @@ while scale == None:
 		scale = 100000
 	elif scale_flag.lower() in ('cc', 'city center'):
 		scale = 14000
+	elif scale_flag.lower() in ('p', 'pylon'):
+		scale = 3000
 	else:
-		scale_flag = raw_input('invalid map input, enter "sm" or "cc": ')
+		scale_flag = raw_input('invalid map input, enter "sm", "cc" or "p": ')
 
 # values below are in cartographic points
 w1 = input('enter the width of the first line, in points: ')
@@ -27,4 +31,10 @@ pt_at_scale = carto_pt_feet * scale
 offset = ((w1 / float(2)) + (w2 / float(2)) + gap) * pt_at_scale
 print 'The offset value at scale 1:{0}'.format(scale)
 print 'with line witdths of {0} & {1} and a gap of {2}'.format(w1, w2, gap)
-print '***is {0} feet***'.format(int(round(offset))) # round to nearest ft
+
+# round to nearest foot for small scales and nearest tenth of a foot for large
+if scale > 10000:
+	offset = int(round(offset))
+else:
+	offset = round(offset, 1)
+print '***is {0} feet***'.format(offset)

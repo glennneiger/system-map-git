@@ -5,7 +5,7 @@ create table city_center_streets as
 			('primary'), ('primary_link'), ('secondary'), ('secondary_link'),
 			('tertiary'), ('tertiary_link'), ('residential'), ('unclassified'))
 	select ST_Transform(way, 2913) as geom, 
-		case when highway = 'construction'then construction
+		case when highway = 'construction' then construction
 			else highway end as highway,
 		label_text as abbr_name, osm_name, prefix as st_prefix,
 		name as st_name, type as st_type, suffix as st_suffix, bridge, 

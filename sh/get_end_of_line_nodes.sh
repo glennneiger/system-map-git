@@ -61,8 +61,7 @@ while true; do
 		exportEndOfLineNodes "$sm_eol_nodes";
 		dropPgTables;
 		break;;
-
-
+	
 	cc)	cc_offset_routes="${project_dir}/shp/city_center/combined_routes_cc.shp"
 		loadOffsetRoutes "$cc_offset_routes";
 		createEndOfLineNodes;
@@ -71,6 +70,7 @@ while true; do
 		exportEndOfLineNodes "$cc_eol_nodes";
 		dropPgTables;
 		break;;
+	
 	*) echo "Enter 'sm' for system map or 'cc' for city center"
 	esac
 done

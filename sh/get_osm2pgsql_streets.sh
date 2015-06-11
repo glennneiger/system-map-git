@@ -37,20 +37,38 @@ dropStreetsTable() {
 	psql -d $pg_dbname -U $pg_user -h $pg_host -c "$drop_cmd"
 }
 
-# # Get major roads for system map
-# mjr_roads_tbl='system_map_streets'
-# mjr_road_sql='get_major_roads_from_osm2pgsql.sql'
-# mjr_roads_shp='system_map/osm2pgsql_major_roads.shp'
 
-# generateStreetsTable "$mjr_roads_sql";
-# exportStreetsToShp "$mjr_roads_tbl" "$mjr_roads_shp";
-# dropStreetsTable "$mjr_roads_tbl";
+while true; do
+	read -p 'Which map do you wish to grab streets for (sm, cc or pylon)?' map
+	case $map in
+	# get major roads for system map
+	sm)	mjr_roads_tbl='system_map_streets'
+		mjr_road_sql='get_major_roads_from_osm2pgsql.sql'
+		mjr_roads_shp='system_map/osm2pgsql_major_roads.shp'
 
-# Get city center streets for system map inset
-cc_streets_tbl='city_center_streets'
-cc_streets_sql='get_city_center_streets_from_osm2pgsql.sql'
-cc_streets_shp='city_center/streets_cc.shp'
+		generateStreetsTable "$mjr_roads_sql";
+		exportStreetsToShp "$mjr_roads_tbl" "$mjr_roads_shp";
+		dropStreetsTable "$mjr_roads_tbl";
+		break;;
+	# get city center streets for system map inset
+	cc)	cc_streets_tbl='city_center_streets'
+		cc_streets_sql='get_city_center_streets_from_osm2pgsql.sql'
+		cc_streets_shp='city_center/streets_cc.shp'
 
-generateStreetsTable "$cc_streets_sql";
-exportStreetsToShp "$cc_streets_tbl" "$cc_streets_shp";
-dropStreetsTable "$cc_streets_tbl";
+		generateStreetsTable "$cc_streets_sql";
+		exportStreetsToShp "$cc_streets_tbl" "$cc_streets_shp";
+		dropStreetsTable "$cc_streets_tbl";
+		break;;
+	# get streets for max stop pylon maps
+	pylon) pylon_streets_tbl='pylon_streets'
+		pylon_streets_sql='get_pylon_streets_from_osm2pgsql.sql'
+		pylon_streets_shp='pylon/streets_pylon.shp'
+
+		generateStreetsTable "$pylon_streets_sql";
+		exportStreetsToShp "$pylon_streets_tbl" "$pylon_streets_shp";
+		dropStreetsTable "$pylon_streets_tbl";
+		break;;
+	# keep looping if no match is made
+	*) echo "Enter 'sm', 'cc' or 'pylon' to indicate your map"
+	esac
+done

@@ -57,7 +57,7 @@ def generateMatchCode():
 			u_cursor.updateRow((service, r_type, merge))
 
 def mergeDualCarriageways():
-	"""Collapse dual carriageways and turning circles in single, striagt-line roadways, the 
+	"""Collapse dual carriageways and turning circles in single, straight-line roadways, the 
 	tools that achieve these effects are run on each route separately then the routes are 
 	added back to a single feature class as this yields better results"""
 
