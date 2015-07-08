@@ -41,8 +41,8 @@ def multiBufferRivers():
 
 	# generate a list of buffer distance based on the space between buffers
 	# and the number of intervals desired
-	distance = 90
-	intervals = 5
+	distance = 45
+	intervals = 11
 
 	# this initial value is to create a replica of the orginal geometry as a part
 	# of the set, the tool doesn't accept zero as a distance value
