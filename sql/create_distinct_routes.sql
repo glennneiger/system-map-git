@@ -26,7 +26,7 @@ create table route_pt_dump as
 --which only portions of them are rush hour: (30, 31, 32 34, 36, 72, 75, 87) on 2014 system map
 	with rush_hour_routes (rush) as (
 		values (1), (11), (18), (38), (50), (51), (53), (55), (59), 
-			(61), (64), (65), (66), (84), (92), (96), (99)),
+			(61), (64), (65), (66), (68), (84), (92), (96), (99)),
 	source_routes as (
 		select row_number() over (order by rf.route_id) as id, 
 			rf.geom, rf.route_id, r.type as route_type,
