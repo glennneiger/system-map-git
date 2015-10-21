@@ -1,4 +1,4 @@
-# (c) Grant Humphries for TriMet, 2015
+# g. humphries
 # ArcGIS Version:   10.3.0
 # Python Version:   2.7.8
 #--------------------------------

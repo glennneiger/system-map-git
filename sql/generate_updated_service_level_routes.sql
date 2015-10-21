@@ -1,4 +1,4 @@
---(c) Grant Humphries for TriMet, 2015
+--g. humphries
 --PostGreSQL Version: 9.3.5
 --PostGIS Version: 2.1.4
 ----------------------------------
