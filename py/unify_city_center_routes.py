@@ -1,4 +1,4 @@
-# g. humphries
+# Grant Humphries, 2015
 # ArcGIS Version:   10.3.0
 # Python Version:   2.7.8
 #--------------------------------

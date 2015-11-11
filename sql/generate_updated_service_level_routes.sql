@@ -1,4 +1,4 @@
---g. humphries
+--Grant Humphries, 2015
 --PostGreSQL Version: 9.3.5
 --PostGIS Version: 2.1.4
 ----------------------------------
